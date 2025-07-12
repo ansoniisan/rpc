@@ -16,7 +16,7 @@ let humanScore = 0;
 let ties = 0;
 
 function getComputerChoice() {
-    computerChoice = Math.floor(Math.random() * 3) + 1;
+    let computerChoice = Math.floor(Math.random() * 3) + 1;
 
     if (computerChoice == 1) {
         return "rock";
@@ -28,7 +28,7 @@ function getComputerChoice() {
 }
 
 function getHumanChoice() {
-    humanChoice = prompt("What's your choice?");
+    let humanChoice = prompt("What's your choice?");
     humanChoice = humanChoice.toLowerCase();
     return humanChoice;
 }
@@ -48,6 +48,8 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
+// A player only "reigns supreme" if they win more than the opponent 
+// AND have at least as many wins as there are ties.
 function playGame() {
     for (let i = 0; i < 5; i++) {
         const humanAnswer = getHumanChoice();
@@ -55,16 +57,16 @@ function playGame() {
         playRound(humanAnswer, computerAnswer)
     }
 
-    if (computerScore > humanScore) {
+    if (computerScore > humanScore && computerScore >= ties) {
         return "the computer reigns supreme!";
     }
-    else if (humanScore > computerScore) {
+    if (computerScore < humanScore && humanScore >= ties) {
         return "you reign supreme!";
     }
-    else {
+    if (computerScore === humanScore && computerScore > ties) {
         return "you both reign supreme!";
-    };
-
+    }
+    return "none of you reign supreme";
 }
 
 console.log(playGame(), `Final stats: computer score = ${computerScore}, human score = ${humanScore}, ties = ${ties}`);
